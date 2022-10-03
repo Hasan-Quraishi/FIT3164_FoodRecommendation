@@ -1,0 +1,114 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
+		<title> input </title>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">		
+    </head>
+<body>
+    <div class="topnav">
+        <a class="Home" href="{{ url_for('search',email=email) }}">Home</a>
+        <a href="{{url_for('recommend',email=email)}}">Recommend</a>
+        <a href="{{url_for('profile',email=email)}}">Profile</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</br>
+    
+    <center>
+    <div class="card">
+        <h2 id="name" class="text-FoodFlix" style="font-family: 'Rowdies', cursive;">Foodflix</h2>
+        <h3>First Name: {{firstname}}</h3>
+        <h3>Last Name: {{lastname}}</h3>
+        <h3>Email Address: {{email}}</h3>
+      </div>
+    <div class="searchdiv"><center>
+    <h1>Previously Tried Dishes</h1>
+    <form class="search_bar" method="post" action="" style="margin:auto;max-width:600px">
+        <input type="text" placeholder="Search by dish ,category(i.e.Desert)" name="dish">
+        <button type="submit" class="form__button">Publish</button>
+        </form>
+    </div>
+    </center>
+    <center>
+        {% for item in data %}
+        <tr>
+          <div class="container">
+            <td >{{item[1]}}</td></br>
+            <td >Rating: {{item[7]}}</td><br>
+            <img src={{item[4]}} style="object-fit:scale-down;object-position: right;width:200px;height:300px;"/><br><br>
+              <!-- Trigger the modal with a button -->
+              <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{{item[0]}}">More</button>
+              <div class="modal fade" id="{{item[0]}}" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <td class="modal-title">{{item[1]}}</td>
+                    </div>
+                    <div class="modal-body">
+                      <img src={{item[4]}} style="object-fit:scale-down;object-position: right;width:200px;height:300px;"/></br></br>
+                      <td>Cooking Time      : {{item[2]}} Seconds</td></br>
+                      <td>Ingredients       : {{item[21]}}</td></br>
+                      <td>Recipe Instructions: {{item[20]}}</td></br>
+                      <td>-----------------------------------------------------------------------------------------------------------</td></td></br>
+                            <td><b>Nutrition</b></td></br>
+                            <div class="circle">
+                              <p class="circle-content">
+                                {{item[9]}}</br>Calories
+                              </p><br>
+                            </div>
+                            <div class="circle">
+                              <p class="circle-content">
+                                {{item[10]}}</br>Fat Content
+                              </p>
+                            </div>
+                            <div class="circle">
+                              <p class="circle-content">
+                                {{item[12]}}</br>Cholestrol Content
+                              </p>
+                            </div>
+                            <div class="circle">
+                              <p class="circle-content">
+                                {{item[15]}}</br>Fiber Content
+                              </p>
+                            </div>
+                            <div class="circle">
+                              <p class="circle-content">
+                                {{item[13]}}</br>Sodium Content
+                              </p><br>
+                            </div>
+                            <div class="circle">
+                              <p class="circle-content">
+                                {{item[14]}}</br>Carbohydrate Content
+                              </p>
+                            </div>
+                            <div class="circle">
+                              <p class="circle-content">
+                                {{item[16]}}</br>Sugar Content
+                              </p><br>
+                            </div>
+                            <div class="circle">
+                              <p class="circle-content">
+                                {{item[17]}}</br>Protein Content
+                              </p>
+                            </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </br>
+          </div>
+          </tr>
+          {% endfor %}
+      </center>
+      <br/>
+
+</body>
+</html>
