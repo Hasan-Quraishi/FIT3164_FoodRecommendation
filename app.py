@@ -326,5 +326,5 @@ def check(email):
         return True 
     else:   
         return False
-if __name__ == '__main__':
+#if __name__ == '__main__':
     #app.run()
