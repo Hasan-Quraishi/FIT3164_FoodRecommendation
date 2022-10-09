@@ -1,0 +1,27 @@
+<!-- Store this code in 'login.html' file inside the 'templates' folder -->
+
+<html>
+	<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
+		<title> Login </title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='newstyle.css') }}">		
+	</head>
+	<body></br></br></br></br></br>
+		<img src="{{url_for('static', filename='fast-food.png')}}" style="object-fit:scale-down;object-position: right;width:200px;height:300px;"/>
+		<div class="container">
+			<h1 class="form__title">Login</h1>
+            <div class="form__message form__message--error"></div>
+            <div class="form__input-group">
+				<form action="{{ url_for('login') }}" method="post">
+				<div class="form__title">{{ msg }}</div>
+					<input id="email" name="email" type="text" placeholder="Enter Your email" class="form__input"/></br></br>
+					<input id="password" name="password" type="password" placeholder="Enter Your Password" class="form__input"/></br></br></br>
+					<input type="submit" class="form__button" value="Sign In"></br></br>
+				</form>
+			</h2>
+			<p class="form__link">Don't have an account? <a class="bottom" href="{{url_for('register')}}"> Sign Up here</a></p>
+		</div>
+		</div>
+	</body>
+</html>
