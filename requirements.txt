@@ -1,5 +1,7 @@
 Flask==1.1.2
 Flask_MySQLdb==1.0.1
+mysql-connector-python
 numpy==1.18.5
 pandas==1.0.5
 soupsieve==2.0.1
+
