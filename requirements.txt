@@ -18,4 +18,5 @@ typing_extensions==4.4.0
 Werkzeug==2.2.2
 zipp==3.9.0
 soupsieve==2.3.2.post1
+gunicorn
 
