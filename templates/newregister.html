@@ -14,10 +14,9 @@
             <div class="form__input-group">
 				<form action="{{ url_for('register') }}" method="post">
 				<div class="form__title">{{ msg }}</div>
-					<input id="first name" name="firstName" type="text" placeholder="Enter Your Username" class="form__input"/></br></br>
-					<input id="lastName" name="lastName" type="text" placeholder="Enter Your Username" class="form__input"/></br></br>
-					<input id="password" name="password" type="password" placeholder="Enter Your Password" class="form__input"/></br></br>
+					<input id="userName" name="userName" type="text" placeholder="Enter Your Username" class="form__input"/></br></br>					
 					<input id="email" name="email" type="text" placeholder="Enter Your Email ID" class="form__input"/></br></br>
+					<input id="password" name="password" type="password" placeholder="Enter Your Password" class="form__input"/></br></br>
 					<input type="submit" class="form__button" value="Sign Up"></br>
 				</form>
 			<p class="form__link">Already have an account? <a class="bottom" href="{{url_for('login')}}"> Sign In here</a></p>
