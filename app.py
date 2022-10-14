@@ -40,14 +40,13 @@ def login():
             msg = 'Logged in successfully !'
             return redirect(url_for('search',email=email))
         else:
-            msg = 'Incorrect username / password !'
+            msg = 'Incorrect email / password !'
     return render_template('newlogin.html', msg = msg)
 @app.route('/register', methods =['GET', 'POST'])
 def register():
     msg = ''
     if request.method == 'POST' :
-        firstName = request.form['firstName']
-        lastName = request.form['lastName']
+        firstName = request.form['userName']
         email = request.form['email']
         cursor = mysql.connection.cursor()
         cursor.execute('SELECT * FROM userdata WHERE email = %s', [email])
@@ -56,11 +55,14 @@ def register():
         if check(email):
             if account==None:
                 password = request.form['password']
-                cursor = mysql.connection.cursor()
-                cursor.execute("INSERT INTO userdata(firstName, lastName,email,password) VALUES (%s, %s,%s,%s)", (firstName, lastName,email,password))
-                mysql.connection.commit()
-                cursor.close()
-                return redirect(url_for('input',email=email))
+                if len(validate(password))==0:
+                    cursor = mysql.connection.cursor()
+                    cursor.execute("INSERT INTO userdata(firstName,email,password) VALUES (%s,%s,%s)", (firstName,email,password))
+                    mysql.connection.commit()
+                    cursor.close()
+                    return redirect(url_for('input',email=email))
+                else:
+                    msg=validate(password)
         else:
             msg="Invalid Email ID"
     return render_template('newregister.html', msg = msg)
@@ -188,7 +190,7 @@ def profile(email):
         cursor.execute(query)
         mysql.connection.commit()
         account = cursor.fetchone()
-        id=account["id"]
+        
         firstname=account["firstName"]
         lastname=account["lastName"]
         email=account["email"]
@@ -202,7 +204,7 @@ def profile(email):
             mysql.connection.commit()
             data = cursor.fetchall()
             return render_template('profile.html',data=data,firstname=firstname,lastname=lastname,email=email)
-        return render_template('profile.html',data=data,firstname=firstname,lastname=lastname,email=email)
+        return render_template('profile.html',data=data,userName=firstname,lastname=lastname,email=email)
 @app.route('/rating/<email>/<itemid>/', methods=['GET', 'POST'])
 def rating(email,itemid):
     if request.method == "POST": 
@@ -325,5 +327,16 @@ def check(email):
         return True 
     else:   
         return False
+def validate(password):
+    while True:
+        if len(password) < 8:
+            return("Make sure your password is at least 8 letters")
+        elif re.search('[0-9]',password) is None:
+            return("Make sure your password has a number in it")
+        elif re.search('[A-Z]',password) is None: 
+            return("Make sure your password has a capital letter in it")
+        else:
+            return("")
+            break
 if __name__ == '__main__':
     app.run()
