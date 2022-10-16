@@ -129,6 +129,7 @@ def search(email):
         dataset3=pd.DataFrame(recipecat)
         recipelist=findbyingredient(RecipeCategory,dataset3)
         recipelist=tuple(recipelist)
+
         #dishl=[dish]
         #new_tup=tuple(dishl)
         numbing=("%s,"*len(recipelist))[:-1]
@@ -137,19 +138,21 @@ def search(email):
         #print(new_tup_n)s
         if len(recipelist)>0 and len(dish)==0:
             cursor = mysql.connection.cursor()
-            print(recipelist)
             #selector='SELECT * from dataset WHERE Name LIKE "%'+dish+'%" AND RecipeCategory IN ('+ingredients+')'
             cursor.execute('SELECT * from dataset3 WHERE RecipeId IN' +where_in,recipelist)
             #selector='SELECT * from dataset WHERE Name LIKE "%%'+dish+'%%"'+'AND RecipeCategory IN' +where_in,ingredients
             #cursor.execute(selector)
-
-        else:
+        elif all(item == 38 for item in recipelist) and len(recipelist) > 2 and len(dish)!=0:
             cursor = mysql.connection.cursor()
             selector='SELECT * from dataset3 WHERE Name LIKE "%'+dish+'%" OR RecipeCategory LIKE "%%'+dish+'%%"'
             cursor.execute(selector)
+        else:
+            cursor = mysql.connection.cursor()
+            selector='SELECT * from dataset3 WHERE (Name LIKE "%'+dish+'%" OR RecipeCategory LIKE "%%'+dish+'%%")'
+            selector=selector + ' AND RecipeId IN'
+            cursor.execute(selector+str(recipelist))
         mysql.connection.commit()
         data = cursor.fetchall()
-        
         # all in the search box will return all the tuples
         if len(data) == 0 and dish == 'all': 
             cursor.execute("SELECT * from dataset3")
